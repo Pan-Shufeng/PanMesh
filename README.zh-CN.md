@@ -68,3 +68,5 @@
 [安装与配置](INSTALL-AGENT.zh-CN.md) · [主对话协作说明](COLLABORATE.zh-CN.md) · [记忆库优化路线](docs/MEMORY-ROADMAP.zh-CN.md) · [什么时候考虑向量检索和向量数据库](docs/MEMORY-ROADMAP.zh-CN.md#什么时候考虑向量检索和向量数据库)
 
 代码采用 [MIT 许可](LICENSE)。失败归因模块借鉴并适配自 [multi-agent-collaboration](https://github.com/Gambler134201/multi-agent-collaboration)，保留了[上游许可](ledger_vendor/LICENSE)。
+
+作者与维护者：[Pan-Shufeng](https://github.com/Pan-Shufeng)。[版本发布](https://github.com/Pan-Shufeng/PanMesh/releases) · [反馈问题](https://github.com/Pan-Shufeng/PanMesh/issues/new/choose)

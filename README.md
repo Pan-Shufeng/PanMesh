@@ -64,3 +64,5 @@ To add a harness, start with project MCP or the claim-and-submit workflow. To ad
 Some runtime messages, vault templates and the [detailed ledger reference (Chinese)](ledger_api.md) are currently in Chinese. The installation and collaboration guides are available in both languages.
 
 [MIT license](LICENSE). The failure classification module adapts work from [multi-agent-collaboration](https://github.com/Gambler134201/multi-agent-collaboration) under its [upstream license](ledger_vendor/LICENSE).
+
+Created and maintained by [Pan-Shufeng](https://github.com/Pan-Shufeng). [Releases](https://github.com/Pan-Shufeng/PanMesh/releases) · [Report a problem](https://github.com/Pan-Shufeng/PanMesh/issues/new/choose)
