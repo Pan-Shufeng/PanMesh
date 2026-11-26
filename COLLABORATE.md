@@ -1,41 +1,25 @@
-# 多 AI 项目协作执行说明
+# Coordinate work across AI clients
 
-按用户本次提示中的主项目、执行客户端、目标项目、模型及任务执行。主 AI 负责接入、送达、跟进和验收。本文描述的是安装 PanMesh 的 Windows 电脑上的系统，需要本机文件、任务簿以及所选执行端的操作能力。如果当前环境缺少这些能力，说明缺哪项和可以完成哪一步。先从用户的安装记录确定 PanMesh 根目录，使用其中 runtime/python/Scripts/python.exe。按需读取 INSTALL-AGENT.md、ledger_api.md。若 Codex 担任主 AI，保持当前聊天；新接入的 MCP 尚未出现在工具栏时，从本机启动 project_client.py list 或 call <连接> <工具> --args-file <UTF-8 JSON文件>，使用同一服务。
+English · [简体中文](COLLABORATE.zh-CN.md)
 
-## 检查、切换或关闭共享 MCP
+Give this file to the lead chat together with the task, target workspace, desired model and acceptance criteria. The lead owns delivery, follow-up and review. Use the PanMesh installation path recorded by the installer.
 
-先确定项目的绝对路径和要检查的客户端。用户只问状态时，全程只读。按每个客户端分别报告 **配置入口、绑定项目和角色、登记模式、当前聊天是否连通**。有多个指向本服务的入口时逐一核对，包括跨项目别名。
+## Check access
 
-| 客户端 | 在实际工作目录检查的项目配置 |
-| --- | --- |
-| Codex | `.codex/config.toml` 的 MCP 服务段 |
-| Cursor | `.cursor/mcp.json` 的 `mcpServers` |
-| Claude Code，包括桌面 Code 标签 | `.mcp.json` 的 `mcpServers`。桌面端取该会话实际选择的工作文件夹。 |
+Inspect the selected workspace's project configuration: Codex uses `.codex/config.toml`, Cursor uses `.cursor/mcp.json`, and Claude Code uses `.mcp.json`. For Desktop Code, check the workspace actually open in the chat. Match the service connection name to its registered project, role and mode without revealing secrets. Check aliases and inherited entries where relevant.
 
-从本服务启动参数中取连接名，对照 `runtime/connections.sqlite3` 中 connections 的 name、project、actor、mode，只查元信息。再在目标聊天查看该服务实际暴露的工具。只采集（capture）只提供 memory_capture，检查时列工具即可；协作（collab）可用 task_list 做只读验证。配置存在而工具不可见，报告“已配置，当前聊天未连通或尚未验证”。项目配置没有入口但聊天中仍有工具时，核查继承配置或旧会话。project_client.py list 能验证本机连接，不能证明另一个窗口已经加载。
+Report project configuration and live connectivity separately. Listing the service tools in the target chat verifies what that chat can use. Capture mode exposes only `memory_capture`; collaboration mode also offers read tools such as `task_list`. A local `project_client.py list` check alone cannot establish live chat connectivity. A status request is read-only.
 
-- **开启或切换模式**。仅为指定项目和客户端复用或 enroll 一个项目、角色、模式均匹配的连接。首次用 link-project 安装；切换前保存原配置，仅替换已核实服务的连接名，保留其他设置。link-project 遇到不同绑定会拒绝覆盖。降为只采集时检查是否还有其他协作入口；需要立即收回权限时按下一条核查旧连接。重载目标项目，重新核对登记模式及实际工具。
-- **关闭项目入口**。只移除指定工作区、指定客户端指向本服务的配置项。重载后在目标聊天验证。已有聊天可能暂时持有原连接。
-- **立即撤销访问**。先核对连接是否专用及受影响的路由。专用连接可用 `manage.py revoke <连接名>` 撤销，再清理对应项目入口。共用连接若会影响其他项目或窗口，先说明范围，请用户选择。保留笔记、原文和任务记录。
-- **自动采集单独管理**。如果用户也要停止已选会话的结束钩子，使用 capture_hook.py status 核对，再对指定连接、客户端和会话用 unselect。切换 MCP 模式不会替用户选择要保存的聊天，也不改变客户端原生记忆设置。
+To change mode, enroll or reuse a matching project/role connection. Back up the configuration, replace only the verified service binding and recheck after reloading the client. To disable access in a project, remove its service entry. To revoke immediately, check whether the credential is shared before using `manage.py revoke CONNECTION`. If requested, stop separately enrolled capture hooks using `capture_hook.py status` and `unselect`. Preserve stored data and native memory settings.
 
-## 确定项目和连接
+## Dispatch and review
 
-默认执行端与主 AI 使用同一个实际项目目录。以下接入命令以 Codex 担任主 AI 为例；其他客户端应使用自身已授权的负责人连接，避免冒用 Codex 身份。用户指定另一个目录时分别解析两个绝对路径。名称不唯一或当前不在项目内时，只询问缺失的项目选择。按上表检查双方项目入口及各自绑定。只查询绑定元信息，不输出密钥。
+1. Verify the target workspace path and project identity. Use the [installation guide](INSTALL-AGENT.md) if setup is missing. For cross-project jobs, share only the authorized handoff through a dedicated collaboration project unless the user explicitly grants broader access.
+2. Record the goal, authorized material, deliverable and acceptance criteria. Use `run_routes` to identify the worker and channel. Honor the requested model and verify the selection in the client or adapter. If unavailable, report the choices before substituting.
+3. For a **pull** route, use `task_dispatch` and send a short notification to the correct project chat: “Claim task ID using SERVICE, complete the outstanding criteria and submit evidence with task_submit.” The lead delivers this reminder. Verify the message or claim. For a supported **push** route, register the round and call `run_start` directly; the coordinator manages the send reservation. Retain the run ID.
+4. Check the ledger periodically while progressing independent work. If delivery is uncertain, check the original session and receipt before retrying. If the target is unreachable or approval is required, report the actual state.
+5. Review the artifact or evidence yourself. Use `task_review` to accept, return or defer each criterion. Reassign only outstanding items. Report the result, the observed model selection and anything still unresolved.
 
-相同项目优先复用已有 collab 身份。首次接入以规范化完整项目路径区分同名目录，采用可重复的连接名（例如路径 SHA-256 前 16 位加客户端后缀）。用 manage.py enroll <连接名> <项目标识> <对应角色> collab 分配两种身份，用 manage.py link-project <连接名> <codex、cursor 或 claude> <指定目录> 安装项目配置。用 manage.py route <主连接> <路由名> <执行连接> <实际客户端> <目标目录> --channel pull 登记缺少的路由。通过 run_routes 和目标窗口实际可用的 MCP 验证。重试复用已有绑定；已有同名服务指向不同项目时保留它。
+## Save only what the user selects
 
-跨项目默认只授权这次交接，采用下述专用项目方式，主项目登记成果索引。仅当用户明确授权目标窗口读取主项目的协作资料时，才给目标客户端 增加该主项目的专用协作身份与独立具名 MCP 入口；保留它原项目的连接。独立入口沿用 link-project 生成的对应客户端 stdio 配置格式，服务名附主项目路径摘要，只引用 project_client.py serve 和对应连接名。明确此入口可读取主项目当前授权的协作资料。仅共享当次任务时，使用此次协作专用项目和双方独立连接，仅传获准的短交接。不要合并两个项目已有记忆或替换默认身份。
-
-用户指定 Claude 中转时，选择其已配置的桌面 Gateway。对于其他 AI，先核实该客户端是否支持本服务和可用的通知方式。
-
-## 派工和提醒
-
-1. 在任务簿创建目标、具体交付、分项验收标准和允许使用的材料。若指定模型，将名称也记入本轮要求。先查 run_routes。已有 Codex、Cursor 或 Claude 桌面窗口主动领单时，用 task_dispatch 登记 channel=pull、实际客户端和绑定角色。若用户选择已登记的后台 push 路径，登记 push 后直接调用 run_start，以运行编号查询和恢复；无需再操作桌面或另行取得发送许可。指定模型只有在该通道能明确选择并验证时才派发。重试同一逻辑操作沿用 request_id。主动领取无需 run_start。
-2. 使用本机桌面控制定位选定路径的目标客户端窗口；未打开时打开该目录，核实工作区路径。只有用户指明已有聊天才复用它，否则在该项目新建协作聊天。若指定模型，从当前窗口模型菜单选择并核对显示名称；不可用时报告实际可选项，等用户决定替代，不以 Auto 充当指定模型。未指定时沿用当前模型。项目 MCP 需要重载时只重开相应项目窗口，注意未保存编辑。遇到客户端要求用户批准的动作遵循原审批。
-3. 由主 AI 在该窗口实发一条短提示：“用【服务名】领取任务【编号】，核对本轮要求，完成后按条件用 task_submit 回报，列出成果位置、证据及未决项。” 检查消息已发送、任务已领取或已有明确错误。不要让用户抄编号。若送达情况不明，先看原聊天和任务状态，避免再次派工。没有可操作的桌面或已授权的等效通知渠道时，明确报告停在哪一步，勿声称已通知。
-4. 在等待期间推进可独立完成的工作。低频检查任务簿，等到提交或明确阻塞。在主窗口核对实际文件、差异、证据或测试，用 task_review 分项登记接受、退回或待决。仅补派有问题的项到同一个已核实的项目、聊天和模型，再跟进至验收。向用户交付成果、实际模型或界面显示名、验收结论和仍未决的部分。
-
-## 留存
-
-协作任务簿只登记必要交接与验收记录。开启协作不会授权长期采集。只有用户点名选定某段对话、文件或做法时，才在指定项目采集可核实的原话和顺序，标明片段边界与缺口。提炼的案例和做法另建提案，保留回到原话的链接，按用户意愿决定认可或分享。
+The ledger holds operational handoffs and review evidence. Capture a personal conversation or file into long-term memory only when the user selects it. Preserve visible wording, speaker, sequence and any gaps. Keep interpretations, case notes and proposed methods separate, link them to their sources and let the user decide what to approve or share.
