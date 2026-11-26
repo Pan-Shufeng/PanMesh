@@ -1,0 +1,12 @@
+runtime/
+imports/
+backups/
+vault/*
+!vault/模板/
+.codex/
+.claude/
+.cursor/
+.mcp.json
+__pycache__/
+.env*
+*.sqlite*
