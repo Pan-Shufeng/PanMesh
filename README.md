@@ -28,10 +28,10 @@ The project has tested **Codex, Claude Code, Cursor, Antigravity, DSH and WorkBu
 
 ## Why use it?
 
-- **Reserve premium model quota for hard decisions.** Delegate routine extraction and independent checks to another model. Use one window when the task is simple.
-- **Spend less context repeating instructions.** A worker receives the goal, relevant material, method version and acceptance criteria. An interrupted job can resume from its recorded state.
-- **Change providers as plans change.** Choose the client, model and delivery route per project. Each provider's billing and approval rules still apply.
-- **Study how you work.** Follow a case back to the original exchange, compare corrections and keep track of which method worked on a new task.
+- **Coordinate the AI windows you already use without repeating the brief.** Stay in the lead chat and choose the project and worker. The lead breaks down the task, notifies the worker and reviews the result. Each worker gets the goal, relevant material and acceptance criteria, and revisits only the items sent back.
+- **Choose a model for each task and save premium quota for hard decisions.** Use a strong reasoning model to plan difficult work or review disputed findings, and delegate bulk extraction to a model with available quota. When another provider offers a better fit or a better plan, change that assignment and keep the project's method versions and review history.
+- **Put a tool in one client to work for the whole project.** If a skill works best in Claude Code, send that step there. If Cursor already has the MCP connection needed to check a source, let Cursor collect the evidence. The lead can review the artifact without having to install the same integration in every client.
+- **Share a short method today and revisit the original exchange later.** Preserve the wording, speakers and order of the messages you select. Write up cases and reusable methods separately. The next worker can receive just an approved summary; in Obsidian you can trace it back to the correction that inspired it and check which version a later task used and how it performed.
 
 ## How it works
 
