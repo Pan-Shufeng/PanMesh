@@ -4,7 +4,7 @@ English · [简体中文](README.zh-CN.md)
 
 Give your AI workspaces a shared task ledger and a memory you control. Ask Codex to lead a report, have Cursor check its citations, and bring the findings back to Codex for review. Later, save the conversation where you corrected the citation rule and give the next project just the approved rule.
 
-## Get started
+## Quick start
 
 The documented setup uses **Windows, Git and Python 3.11**. Obsidian is optional.
 
@@ -26,12 +26,15 @@ The lead records two tasks with separate acceptance criteria. It uses the config
 
 The project has tested **Codex, Claude Code, Cursor, Antigravity, DSH and WorkBuddy**. Available connection methods, model selection, window notification and background execution depend on each client's configuration and adapter. **Hermes** is among the clients planned for future testing.
 
-## Why use it?
+## Advantages
 
-- **Coordinate the AI windows you already use without repeating the brief.** Stay in the lead chat and choose the project and worker. The lead breaks down the task, notifies the worker and reviews the result. Each worker gets the goal, relevant material and acceptance criteria, and revisits only the items sent back.
-- **Choose a model for each task and save premium quota for hard decisions.** Use a strong reasoning model to plan difficult work or review disputed findings, and delegate bulk extraction to a model with available quota. When another provider offers a better fit or a better plan, change that assignment and keep the project's method versions and review history.
-- **Draw on each client’s ecosystem.** If a skill works best in Claude Code, send that step there. If Cursor already has the MCP connection needed to check a source, let Cursor collect the evidence. The lead can review the artifact without having to install the same integration in every client.
-- **Layered memory with editable summaries and cases linked to original records.** Edit the method summary, add your reasoning to the case, and follow its links to the original messages with their wording, speakers and order preserved. The next worker can receive just an approved summary; in Obsidian you can trace it back to the correction that inspired it and check which version a later task used and how it performed.
+- **Coordinate the AI windows you already use.** Choose the project and workers in your lead chat. The lead splits the work, notifies the workers and reviews their submissions. You can stay in one window without relaying task IDs or copying results between chats.
+- **Skip repeated explanations.** A worker picking up a task can read the project's approved method summary alongside the current materials and acceptance criteria. A citation rule you clarified last week can carry straight into the next review.
+- **Save premium model quota.** Give difficult planning decisions and disputed findings to a strong reasoning model. Delegate bulk extraction and formatting to a model with quota to spare.
+- **Change the lineup when quotas or deals change.** If a subscription limit changes, a provider offers a discount or a new model handles one step better, reassign that step. The project's methods and review history carry over.
+- **Draw on each client’s ecosystem.** Send a step to Claude Code when it has the right skill. If Cursor already has the MCP connection for checking a source, let it collect the evidence and return it to the lead for review.
+- **Keep editable summaries and cases linked to original records.** Revise a method summary, explain a decision in the case notes and follow a link back to the selected messages in their original order. You can share the summary while keeping the source conversation within its project.
+- **Study how you work with AI.** Compare exchanges you chose to save. Which requirements do you tend to add only after the first draft? Which questions got you verifiable evidence on the first try? Reviewing your own words alongside the results helps you spot habits and carry effective methods into your next project.
 
 ## How it works
 
