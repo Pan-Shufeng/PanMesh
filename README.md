@@ -14,6 +14,18 @@ The documented setup uses **Windows, Git and Python 3.11**. Obsidian is optional
 
 The lead needs access to the target window or a supported execution adapter to deliver a notification. Opening a task in the ledger alone does not wake a chat.
 
+## Lead several AI clients from one conversation
+
+If you already tell GPT to split work among chats and review the results, use the same approach across clients. Choose a GPT lead chat that can reach the local project and notify the target windows, such as Codex. Give it the collaboration guide and a prompt like this:
+
+> Lead this report. Ask Cursor in the Papers workspace to check every citation using my selected model. Have Claude Code check the conclusions independently. Review both sets of evidence, send back only the items that need fixing, and give me the final result. I'll choose which messages to save later.
+
+The lead records two tasks with separate acceptance criteria. It uses the configured routes to notify existing windows or start a supported background runner. Each worker submits evidence and open questions; the lead checks the sources and accepts or returns each item. With notification configured, you can stay in the lead chat. If a client requires approval or the requested model is unavailable, the lead reports the specific blocker.
+
+## Client support
+
+The project has tested **Codex, Claude Code, Cursor, Antigravity, DSH and WorkBuddy**. Available connection methods, model selection, window notification and background execution depend on each client's configuration and adapter. **Hermes** is among the clients planned for future testing.
+
 ## Why use it?
 
 - **Reserve premium model quota for hard decisions.** Delegate routine extraction and independent checks to another model. Use one window when the task is simple.
@@ -30,21 +42,24 @@ The lead needs access to the target window or a supported execution adapter to d
 | Task ledger | SQLite records dispatch, claims, evidence, per-criterion review, retries and usage. Repeated requests are deduplicated. An uncertain delivery is reconciled before resending. |
 | Execution | Existing Codex, Cursor and Claude Code project chats can claim work. Supported CLI adapters can start a background session and persist its result. Claude Desktop's Code tab can use a configured Gateway. |
 
-Choose **capture** for a window that may append selected material, or **collab** for a window that should also retrieve authorized memory and work on tasks. Enabling MCP does not enroll every conversation for capture. Direct filesystem access remains subject to OS permissions.
+## Choose a mode for each workspace
+
+| Mode | What the connection can do | When to use it |
+| --- | --- | --- |
+| Capture only (`capture`) | Append selected messages, excerpts or material references to the project and receive a receipt. This connection has no search or dispatch tools. | Keep a discussion for later review. |
+| Collaboration (`collab`) | Retrieve approved summaries, follow authorized sources, propose revisions, and assign, claim, submit or review tasks. | Lead a project, contribute work or reuse an approved method. |
+
+Choose per project and client. For example, Codex and Cursor can collaborate while an interview workspace only captures selected passages. Native memory follows the client's own settings. PanMesh saves personal material you select; automatic capture requires separate session enrollment. MCP grants govern service access. Direct filesystem access follows OS permissions.
+
+## How does a conversation become a reusable method?
+
+Suppose an assistant reports a number from an abstract as if it had checked the original data. Ask it to save the exchange from your correction through the revised answer. Later, use a collaboration chat to turn the first answer, your reasoning and the accepted result into a case with links back to those turns. Approve a separate method such as “Check the original table before reporting a number.” Give the next worker the approved summary and grant access to the exchange only if needed. Earlier tasks still point to the version they used.
 
 To add a harness, start with project MCP or the claim-and-submit workflow. To add a model runner, adapt session startup, receipts and usage reporting in `connectors/`, then register the route in `routing.py`. Handoff prompts, review criteria, note templates and sharing boundaries can all be customized.
 
-## Memory roadmap
+## Documentation
 
-1. **Find the original exchange.** Add full-text search over authorized turns and filters for project, speaker and date.
-2. **Understand a correction.** Compare the first answer, feedback, revision and accepted result side by side. Keep interpretations linked to evidence and exceptions.
-3. **Measure how much context is enough.** Compare brief, versioned handoffs with full context on the same tasks. Track tokens, missed errors and rework.
-4. **Evaluate reusable methods.** Compare outcomes across versions and models, retain failed trials and export proven methods as editable skill drafts.
-5. **Make memory portable.** Preview what a recipient can see, flag dependent notes after revocation and verify source links after restoring a project.
-
-### When to consider vector search
-
-Start with real questions where keyword search misses a known exchange. Compare full-text search with a local hybrid index on those questions: does the correct source appear in the first five results, and how many misleading matches appear alongside it? Consider a dedicated vector database when measured latency, concurrent updates or multi-device access justify operating a service. Indexes should be rebuildable, respect grants before retrieval and reflect revoked access.
+[Installation and configuration](INSTALL-AGENT.md) · [Guide for the lead chat](COLLABORATE.md) · [Memory roadmap](docs/MEMORY-ROADMAP.md) · [When to consider vector search and a dedicated database](docs/MEMORY-ROADMAP.md#when-to-consider-vector-search)
 
 Some runtime messages, vault templates and the [detailed ledger reference (Chinese)](ledger_api.md) are currently in Chinese. The installation and collaboration guides are available in both languages.
 
