@@ -2,6 +2,12 @@
 
 English · [简体中文](README.zh-CN.md)
 
+Model providers can change the rules overnight. A model starts giving worse answers, requests get throttled, prices change, or an account restriction kicks in. Quotas and discounts can look different from one day to the next. The top models keep trading places, and flagship tokens are expensive. In practice, I end up mixing models: a strong one for the judgment calls and a cheaper one for the bulk work. And some of the best tools only work in their native client or a handful of popular ones. **You can be forced to move a task halfway through.**
+
+I can live with switching tools. The frustrating part is leaving the conversation behind. Handing over context by hand takes time, I worry about what I might leave out, and I don’t want to explain the same backstory over and over.
+
+That’s why I wrote **PanMesh**, a cross-platform memory system for AI collaboration. It might be an option for you, too. You can coordinate other AI windows from a chat you already know and choose which exchanges and methods to keep, in your own words and the model’s, so you can revisit and reuse them later.
+
 Give your AI workspaces a shared task ledger and a memory you control. Ask Codex to lead a report, have Cursor check its citations, and bring the findings back to Codex for review. Later, save the conversation where you corrected the citation rule and give the next project just the approved rule.
 
 ## Quick start
