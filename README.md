@@ -42,6 +42,8 @@ The project has tested **Codex, Claude Code, Cursor, Antigravity, DSH and WorkBu
 | Task ledger | SQLite records dispatch, claims, evidence, per-criterion review, retries and usage. Repeated requests are deduplicated. An uncertain delivery is reconciled before resending. |
 | Execution | Existing Codex, Cursor and Claude Code project chats can claim work. Supported CLI adapters can start a background session and persist its result. Claude Desktop's Code tab can use a configured Gateway. |
 
+**Parallel projects have isolated memory.** Multiple projects can use the same PanMesh installation at the same time. Each MCP connection is bound to a project and role. Even when two projects use the same role name and source identifier, their conversations and tasks remain separate. You can explicitly share a method summary with another project while keeping the underlying conversation private. The [three-project concurrency test](tests/test_project_mcp.py) checks that each project can retrieve its own records and cannot retrieve the other two projects’ records.
+
 ## Choose a mode for each workspace
 
 | Mode | What the connection can do | When to use it |
